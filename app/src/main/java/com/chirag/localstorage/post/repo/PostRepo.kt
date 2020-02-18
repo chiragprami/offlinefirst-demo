@@ -7,42 +7,47 @@ import com.chirag.localstorage.post.entity.Post
 import com.chirag.localstorage.post.storage.PostRealmOperation
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.logging.Handler
 
 class PostRepo {
 
-    fun getPosts() {
-      val call = RetrofitClient.getClient()
-            .create(RetrofitAPI::class.java)
-            .getPosts()
-        call.enqueue(object : Callback<JsonArray> {
-            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
-            }
+         fun getPosts(result: (ArrayList<Post>) -> Unit = { }){
 
-            override fun onResponse(
-                call: Call<JsonArray>,
-                response: Response<JsonArray>
-            ) {
-                if (response.isSuccessful){
-                    when (response.code()){
-
-                        200->{
-                            val typeToken = object : TypeToken<ArrayList<Post>>() {}
-                            val list = myGson().fromJson<ArrayList<Post>>(
-                                (response.body()),
-                                typeToken.type
-                            )
-                            PostRealmOperation().storePostsListingData(list)
-                        }
+            val call = RetrofitClient.getClient()
+                    .create(RetrofitAPI::class.java)
+                    .getPosts()
+                call.enqueue(object : Callback<JsonArray> {
+                    override fun onFailure(call: Call<JsonArray>, t: Throwable) {
                     }
-                }
 
-            }
+                    override  fun onResponse(
+                        call: Call<JsonArray>,
+                        response: Response<JsonArray>
+                    ) {
+                        if (response.isSuccessful){
+                            when (response.code()){
 
-        })
-    }
+                                200->{
+                                    val typeToken = object : TypeToken<ArrayList<Post>>() {}
+                                    val postArrayList = myGson().fromJson<ArrayList<Post>>(
+                                        (response.body()),
+                                        typeToken.type
+                                    )
+
+                                    result(postArrayList)
+                                }
+                            }
+                        }
+
+                    }
+
+                })
+        }
 
 }
 

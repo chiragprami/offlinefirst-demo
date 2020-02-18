@@ -12,6 +12,14 @@ import com.chirag.localstorage.post.entity.Post
 
 class PostAdapter(var context: Context, var data: MutableList<Post>) :
     RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+
+    var click: (Post) -> Unit = { }
+
+    fun addItemClickListener(f: (Post) -> Unit) {
+        click = f
+    }
+
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
     }
@@ -32,6 +40,7 @@ class PostAdapter(var context: Context, var data: MutableList<Post>) :
         fun bind(data: Post) {
             binding.setVariable(BR.data, data)
             binding.executePendingBindings()
+            binding.root.setOnClickListener { click(data) }
         }
     }
 }

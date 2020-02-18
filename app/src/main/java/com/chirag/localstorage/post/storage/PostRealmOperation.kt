@@ -5,13 +5,12 @@ import com.chirag.localstorage.post.entity.Post
 import io.realm.RealmList
 import io.realm.RealmResults
 
-
 class PostRealmOperation {
 
     fun storePostsListingData(post: ArrayList<Post>) {
         val realm = MyApplication.realmInstance()
         realm.executeTransaction {
-            var realmList = RealmList<Post>()
+            val realmList = RealmList<Post>()
             realmList.addAll(post)
             realm.insertOrUpdate(realmList)
         }
@@ -30,5 +29,6 @@ class PostRealmOperation {
             changeSet.insertions // => [0] is added.
             updatedData(post)
         }
+
     }
 }
