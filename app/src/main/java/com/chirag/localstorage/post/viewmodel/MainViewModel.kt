@@ -2,6 +2,7 @@ package com.chirag.localstorage.post.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.chirag.localstorage.MyApplication
 import com.chirag.localstorage.post.entity.Post
 import com.chirag.localstorage.post.repo.PostRepo
 import com.chirag.localstorage.post.storage.PostRealmOperation

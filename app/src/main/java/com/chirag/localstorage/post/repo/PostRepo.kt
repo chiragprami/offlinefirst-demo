@@ -1,5 +1,6 @@
 package com.chirag.localstorage.post.repo
 
+import com.chirag.localstorage.MyApplication
 import com.chirag.localstorage.network.RetrofitAPI
 import com.chirag.localstorage.network.RetrofitClient
 import com.chirag.localstorage.network.myGson
@@ -7,11 +8,13 @@ import com.chirag.localstorage.post.entity.Post
 import com.chirag.localstorage.post.storage.PostRealmOperation
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
+import io.realm.Realm
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PostRepo {
+class PostRepo(var realm: Realm = MyApplication.realmInstance()) {
+
 
     fun getPosts() {
       val call = RetrofitClient.getClient()
@@ -34,7 +37,7 @@ class PostRepo {
                                 (response.body()),
                                 typeToken.type
                             )
-                            PostRealmOperation().storePostsListingData(list)
+                            PostRealmOperation(realm).storePostsListingData(list)
                         }
                     }
                 }
