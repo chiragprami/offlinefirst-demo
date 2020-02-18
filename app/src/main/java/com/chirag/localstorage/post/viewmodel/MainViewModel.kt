@@ -21,22 +21,29 @@ class MainViewModel : ViewModel() {
 
 
     fun getPosts() {
+        viewModelScope.launch {
         repo.getPosts { result ->
             storage.storePostsListingData(result)
+        }
         }
     }
 
     fun getStoredData() {
+        viewModelScope.launch {
         storage.getStoredData { result ->
-            postLiveData.value = result
+            postLiveData.postValue(result)
+        }
         }
     }
 
     fun dbUpdateListener() {
+        viewModelScope.launch {
         storage.updateStorageDataListener { result ->
-            postLiveData.value = result
+            postLiveData.postValue(result)
+
         }
-    }
+    }        }
+
 
     fun observePostsLiveData(): MutableLiveData<MutableList<Post>> {
         return postLiveData

@@ -1,8 +1,10 @@
 package com.chirag.localstorage.post.view
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
@@ -33,6 +35,11 @@ class PostAdapter(var context: Context, var data: MutableList<Post>) :
                 false
             )
         )
+    }
+
+    fun updateData(list: MutableList<Post>){
+        data to list
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = data.size

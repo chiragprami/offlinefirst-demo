@@ -7,8 +7,10 @@ import com.chirag.localstorage.post.entity.Post
 import com.chirag.localstorage.post.storage.PostRealmOperation
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,8 +18,8 @@ import java.util.logging.Handler
 
 class PostRepo {
 
-         fun getPosts(result: (ArrayList<Post>) -> Unit = { }){
-
+         suspend fun getPosts(result: (ArrayList<Post>) -> Unit = { }) =
+             withContext(Dispatchers.IO){
             val call = RetrofitClient.getClient()
                     .create(RetrofitAPI::class.java)
                     .getPosts()
