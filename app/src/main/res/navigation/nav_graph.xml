@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.chirag.localstorage.post.view.PostFragment"
+        android:name="com.chirag.localstorage.modules.search.view.SearchFragment"
         android:label="main_fragment"
-        tools:layout="@layout/fragment_post" >
+        tools:layout="@layout/fragment_search_result" >
 
         <action
-            android:id="@+id/action_post_detail"
-            app:destination="@id/postDetailFragment" />
+            android:id="@+id/action_search_detail"
+            app:destination="@id/ownerDetailFragment" />
         <argument
-            android:name="ARG_POST"
-            app:argType="com.chirag.localstorage.post.entity.Post" />
+            android:name="owner"
+            app:argType="com.chirag.localstorage.entity.Owner" />
     </fragment>
     <fragment
-        android:id="@+id/postDetailFragment"
-        android:name="com.chirag.localstorage.post.view.PostDetailFragment"
-        android:label="fragment_post_detail"
-        app:layout="@layout/fragment_post_detail" >
+        android:id="@+id/ownerDetailFragment"
+        android:name="com.chirag.localstorage.modules.owner.view.OwnerDetailFragment"
+        android:label="owner_detail"
+        app:layout="@layout/fragment_owner_detail" >
         <action
-            android:id="@+id/action_postDetailFragment_to_mainFragment"
+            android:id="@+id/action_ownerDetail_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
 

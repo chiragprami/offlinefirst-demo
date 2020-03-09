@@ -1,4 +1,4 @@
-package com.chirag.localstorage.post.entity
+package com.chirag.localstorage.entity
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

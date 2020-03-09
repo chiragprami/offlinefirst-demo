@@ -1,23 +1,21 @@
-package com.chirag.localstorage.post.view
+package com.chirag.localstorage.modules.search.view
 
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
 import com.chirag.localstorage.R
-import com.chirag.localstorage.post.entity.Post
+import com.chirag.localstorage.entity.Items
 
-class PostAdapter(var context: Context, var data: MutableList<Post>) :
-    RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class SearchResultAdapter(var context: Context, var data: ArrayList<Items>) :
+    RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
-    var click: (Post) -> Unit = { }
+    var click: (Items) -> Unit = { }
 
-    fun addItemClickListener(f: (Post) -> Unit) {
+    fun addItemClickListener(f: (Items) -> Unit) {
         click = f
     }
 
@@ -37,14 +35,14 @@ class PostAdapter(var context: Context, var data: MutableList<Post>) :
         )
     }
 
-    fun updateData(list: MutableList<Post>){
+    fun updateData(list: ArrayList<Items>){
         data to list
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = data.size
     inner class ViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Post) {
+        fun bind(data: Items) {
             binding.setVariable(BR.data, data)
             binding.executePendingBindings()
             binding.root.setOnClickListener { click(data) }

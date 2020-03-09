@@ -19,7 +19,7 @@
         android:name=".MyApplication"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".post.view.MainActivity">
+        <activity android:name="com.chirag.localstorage.modules.search.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

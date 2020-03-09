@@ -18,6 +18,30 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import com.facebook.stetho.okhttp3.StethoInterceptor
+
+
+interface RetrofitAPI {
+    companion object {
+        const val search = "search/repositories"
+        const val repos = "repos"
+        const val contributors = "contributors"
+        const val login = "login"
+        const val repo = "repo"
+    }
+
+
+    @GET("$search")
+    fun getPosts(@Query("q")  query:String): Call<JsonObject>
+
+
+    @GET("$repos/{$login}/{$repo}/$contributors")
+    fun getRepoDetail(@Path("login")  login:String,@Path("repo")  repo:String): Call<JsonArray>
+
+}
+
+
+
 
 object RetrofitClient {
     fun getClient(
@@ -33,6 +57,7 @@ object RetrofitClient {
             .readTimeout(100, TimeUnit.SECONDS)
             .build()
 
+
         return Retrofit.Builder()
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
@@ -43,20 +68,7 @@ object RetrofitClient {
 }
 
 object HMap {
-    const val post = "post"
-    const val json = "json"
-    const val ACTIVE = "ACTIVE"
-
-}
-
-interface RetrofitAPI {
-    @GET("$post")
-    fun getPosts(): Call<JsonArray>
-
-    companion object {
-        const val post = "posts"
-
-    }
+    const val q = "q"
 }
 
 
@@ -104,6 +116,5 @@ private val UNRELIABLE_INTEGER_FACTORY =
 fun myGson(): Gson {
     return GsonBuilder().registerTypeAdapterFactory(UNRELIABLE_INTEGER_FACTORY).create()!!
 }
-
 
 
